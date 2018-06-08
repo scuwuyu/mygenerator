@@ -1,0 +1,9 @@
+*.classpath
+*.project
+*.factorypath
+*/.settings/
+*/target/
+*/disconf/download/
+
+.idea/
+*.iml
