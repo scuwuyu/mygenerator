@@ -1,0 +1,3 @@
+# mygenerator
+
+mybatis generator extension.
