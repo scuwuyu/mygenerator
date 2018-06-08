@@ -44,6 +44,7 @@ import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimar
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithBLOBsMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.javamapper.elements.UpdateByPrimaryKeyWithoutBLOBsMethodGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
+import org.mybatis.generator.common.Constants;
 import org.mybatis.generator.config.PropertyRegistry;
 
 /**
@@ -113,6 +114,11 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
         List<CompilationUnit> extraCompilationUnits = getExtraCompilationUnits();
         if (extraCompilationUnits != null) {
             answer.addAll(extraCompilationUnits);
+        }
+
+        CompilationUnit mapperExtraCompilationUnit = getMapperExtraCompilationUnit();
+        if (mapperExtraCompilationUnit != null) {
+            answer.add(mapperExtraCompilationUnit);
         }
 
         return answer;
@@ -230,6 +236,33 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
     public List<CompilationUnit> getExtraCompilationUnits() {
         return null;
     }
+    /** mapperExt 扩展*/
+    public CompilationUnit getMapperExtraCompilationUnit() {
+        String rootInterface = introspectedTable.getMyBatis3JavaMapperType();
+        if (!stringHasValue(rootInterface)){
+            return null;
+        }
+
+        progressCallback.startTask(getString("Progress.17", //$NON-NLS-1$
+            introspectedTable.getFullyQualifiedTable().toString()));
+        CommentGenerator commentGenerator = context.getCommentGenerator();
+
+        FullyQualifiedJavaType type = new FullyQualifiedJavaType(
+                introspectedTable.getMyBatis3JavaMapperType()+ Constants.STRING_EXT);
+        Interface interfaze = new Interface(type);
+        interfaze.setVisibility(JavaVisibility.PUBLIC);
+        commentGenerator.addJavaFileComment(interfaze);
+
+
+        FullyQualifiedJavaType fqjt = new FullyQualifiedJavaType(
+                rootInterface);
+        interfaze.addSuperInterface(fqjt);
+        interfaze.addImportedType(fqjt);
+
+        return interfaze;
+    }
+
+
 
     @Override
     public AbstractXmlGenerator getMatchedXMLGenerator() {

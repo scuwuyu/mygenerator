@@ -36,6 +36,7 @@ import org.mybatis.generator.codegen.mybatis3.model.ExampleGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.PrimaryKeyGenerator;
 import org.mybatis.generator.codegen.mybatis3.model.RecordWithBLOBsGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
+import org.mybatis.generator.common.Constants;
 import org.mybatis.generator.config.PropertyRegistry;
 import org.mybatis.generator.internal.ObjectFactory;
 
@@ -228,6 +229,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
     public List<GeneratedJavaFile> getGeneratedJavaFiles() {
         List<GeneratedJavaFile> answer = new ArrayList<GeneratedJavaFile>();
 
+        /** entity文件生成*/
         for (AbstractJavaGenerator javaGenerator : javaModelGenerators) {
             List<CompilationUnit> compilationUnits = javaGenerator
                     .getCompilationUnits();
@@ -240,7 +242,7 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                 answer.add(gjf);
             }
         }
-
+        /** mapper文件生成*/
         for (AbstractJavaGenerator javaGenerator : clientGenerators) {
             List<CompilationUnit> compilationUnits = javaGenerator
                     .getCompilationUnits();
@@ -272,6 +274,16 @@ public class IntrospectedTableMyBatis3Impl extends IntrospectedTable {
                 true, context.getXmlFormatter());
             if (context.getPlugins().sqlMapGenerated(gxf, this)) {
                 answer.add(gxf);
+            }
+
+            if (xmlMapperGenerator instanceof XMLMapperGenerator){
+                Document extDocument = ((XMLMapperGenerator)xmlMapperGenerator).getExtDocument();
+                GeneratedXmlFile generatedXmlFile = new GeneratedXmlFile(extDocument,
+                        new StringBuilder(getMyBatis3XmlMapperFileName()).insert(getMyBatis3XmlMapperFileName().length()-4,Constants.STRING_EXT).toString(),
+                        getMyBatis3XmlMapperPackage(),
+                        context.getSqlMapGeneratorConfiguration().getTargetProject(),
+                        true, context.getXmlFormatter());
+                answer.add(generatedXmlFile);
             }
         }
 
