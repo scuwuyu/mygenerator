@@ -130,4 +130,9 @@ public interface CompilationUnit {
      * @return the file comment lines
      */
     List<String> getFileCommentLines();
+
+    /** 是否是扩展文件，默认false */
+    default boolean isExt(){
+        return false;
+    }
 }

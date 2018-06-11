@@ -101,4 +101,8 @@ public class GeneratedXmlFile extends GeneratedFile {
     public boolean isMergeable() {
         return isMergeable;
     }
+
+    public Document getDocument(){
+        return document;
+    }
 }

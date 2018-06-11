@@ -52,6 +52,8 @@ public class Interface extends JavaElement implements CompilationUnit {
 
     /** The file comment lines. */
     private List<String> fileCommentLines;
+    /** 是否是ext文件*/
+    private boolean ext;
 
     /**
      * Instantiates a new interface.
@@ -297,5 +299,14 @@ public class Interface extends JavaElement implements CompilationUnit {
      */
     public void addStaticImports(Set<String> staticImports) {
         this.staticImports.addAll(staticImports);
+    }
+
+    @Override
+    public boolean isExt() {
+        return ext;
+    }
+
+    public void setExt(boolean ext) {
+        this.ext = ext;
     }
 }

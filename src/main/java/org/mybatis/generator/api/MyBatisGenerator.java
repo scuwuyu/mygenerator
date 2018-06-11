@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.mybatis.generator.codegen.RootClassInfo;
+import org.mybatis.generator.common.Constants;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.MergeConstants;
@@ -302,6 +303,11 @@ public class MyBatisGenerator {
                     .getTargetProject(), gjf.getTargetPackage());
             targetFile = new File(directory, gjf.getFileName());
             if (targetFile.exists()) {
+                if (gjf.getCompilationUnit().isExt()){
+                    warnings.add(gjf.getFileName()+" File Existing,Do Nothing");
+                    return;
+                }
+
                 if (shellCallback.isMergeSupported()) {
                     source = shellCallback.mergeJavaFile(gjf
                             .getFormattedContent(), targetFile
@@ -341,6 +347,10 @@ public class MyBatisGenerator {
                     .getTargetProject(), gxf.getTargetPackage());
             targetFile = new File(directory, gxf.getFileName());
             if (targetFile.exists()) {
+                if (gxf.getDocument().isExt()){
+                    warnings.add(gxf.getFileName()+" File Existing,Do Nothing");
+                    return;
+                }
                 if (gxf.isMergeable()) {
                     source = XmlFileMergerJaxp.getMergedSource(gxf,
                             targetFile);

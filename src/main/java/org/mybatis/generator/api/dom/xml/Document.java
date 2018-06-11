@@ -33,6 +33,8 @@ public class Document {
     /** The root element. */
     private XmlElement rootElement;
 
+    private boolean isExt;
+
     /**
      * Instantiates a new document.
      *
@@ -89,6 +91,14 @@ public class Document {
      */
     public String getSystemId() {
         return systemId;
+    }
+
+    public boolean isExt() {
+        return isExt;
+    }
+
+    public void setExt(boolean ext) {
+        isExt = ext;
     }
 
     /**

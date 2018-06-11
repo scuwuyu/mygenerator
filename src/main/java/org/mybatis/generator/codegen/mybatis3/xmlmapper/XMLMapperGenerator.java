@@ -284,6 +284,7 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
         xmlElement.addElement(new TextElement(Constants.XML_COMMENT));
 
         document.setRootElement(xmlElement);
+        document.setExt(true);
 
 
 

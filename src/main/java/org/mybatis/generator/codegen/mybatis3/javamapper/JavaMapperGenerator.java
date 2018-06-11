@@ -258,6 +258,7 @@ public class JavaMapperGenerator extends AbstractJavaClientGenerator {
                 rootInterface);
         interfaze.addSuperInterface(fqjt);
         interfaze.addImportedType(fqjt);
+        interfaze.setExt(true);
 
         return interfaze;
     }
